@@ -5,7 +5,7 @@
 
 const NODE_PADDING = 20;
 
-import Canvas from './canvas.js';
+import Canvas from './_canvas.js';
 import * as Parser from './parser.js';
 
 export default class Tree {
@@ -32,16 +32,16 @@ export default class Tree {
     if (this.align_bottom) moveLeafsToBottom(drawables, max_depth);
     if (this.subscript) calculateAutoSubscript(drawables);
     const has_arrow =
-        calculateDrawablePositions(this.canvas, drawables, this.vscaler);
+      calculateDrawablePositions(this.canvas, drawables, this.vscaler);
     const arrowSet = makeArrowSet(drawables, this.fontsize);
     const arrowScaler =
-        Math.pow((Math.sqrt(arrowSet.maxBottom) / arrowSet.maxBottom), 1 / 50);
+      Math.pow((Math.sqrt(arrowSet.maxBottom) / arrowSet.maxBottom), 1 / 50);
 
     this.resizeCanvas(
-        drawables.width + 1,
-        Math.max(
-            (max_depth + 1) * (this.fontsize * this.vscaler * 3),
-            has_arrow ? arrowSet.maxBottom * arrowScaler : 0));
+      drawables.width + 1,
+      Math.max(
+        (max_depth + 1) * (this.fontsize * this.vscaler * 3),
+        has_arrow ? arrowSet.maxBottom * arrowScaler : 0));
     drawables.children.forEach(child => this.drawNode(child));
     this.drawArrows(arrowSet.arrows);
   }
@@ -64,17 +64,17 @@ export default class Tree {
       this.canvas.setFillStyle('black');
     }
     this.canvas.text(
-        drawable.label, getDrawableCenter(drawable), drawable.top + 2);
+      drawable.label, getDrawableCenter(drawable), drawable.top + 2);
   }
 
   drawSubscript(drawable) {
     if (drawable.subscript == null || drawable.subscript == '') return;
     let offset = 1 + getDrawableCenter(drawable) +
-        this.canvas.textWidth(drawable.label) / 2;
+      this.canvas.textWidth(drawable.label) / 2;
     this.canvas.setFontSize(this.fontsize * 3 / 4);
     offset += this.canvas.textWidth(drawable.subscript) / 2;
     this.canvas.text(
-        drawable.subscript, offset, drawable.top + this.fontsize / 2);
+      drawable.subscript, offset, drawable.top + this.fontsize / 2);
     this.canvas.setFontSize(this.fontsize);  // Reset font
   }
 
@@ -82,13 +82,13 @@ export default class Tree {
     if (this.triangles && child.is_leaf && child.label.includes(' ')) {
       const text_width = this.canvas.textWidth(child.label);
       this.canvas.triangle(
-          getDrawableCenter(parent), parent.top + this.fontsize + 2,
-          getDrawableCenter(child) + (text_width / 2) - 4, child.top - 3,
-          getDrawableCenter(child) - (text_width / 2) + 4, child.top - 3);
+        getDrawableCenter(parent), parent.top + this.fontsize + 2,
+        getDrawableCenter(child) + (text_width / 2) - 4, child.top - 3,
+        getDrawableCenter(child) - (text_width / 2) + 4, child.top - 3);
     } else {
       this.canvas.line(
-          getDrawableCenter(parent), parent.top + this.fontsize + 2,
-          getDrawableCenter(child), child.top - 3);
+        getDrawableCenter(parent), parent.top + this.fontsize + 2,
+        getDrawableCenter(child), child.top - 3);
     }
   }
 
@@ -99,8 +99,8 @@ export default class Tree {
     this.canvas.setLineWidth(2);
     for (const arrow of arrows) {
       this.canvas.curve(
-          arrow.from_x, arrow.from_y, arrow.to_x, arrow.to_y, arrow.from_x,
-          arrow.bottom, arrow.to_x, arrow.bottom);
+        arrow.from_x, arrow.from_y, arrow.to_x, arrow.to_y, arrow.from_x,
+        arrow.bottom, arrow.to_x, arrow.bottom);
       if (arrow.ends_to) this.drawArrowHead(arrow.to_x, arrow.to_y);
       if (arrow.ends_from) this.drawArrowHead(arrow.from_x, arrow.from_y);
     }
@@ -201,8 +201,8 @@ function drawableFromNode(canvas, node, depth = -1) {
 
 function getNodeWidth(canvas, node) {
   let label_width = node.type != Parser.NodeType.ROOT ?
-      canvas.textWidth(node.label) + NODE_PADDING :
-      0;
+    canvas.textWidth(node.label) + NODE_PADDING :
+    0;
   if (node.subscript)
     label_width += canvas.textWidth(node.subscript) * 3 / 4 * 2;
   if (node.type != Parser.NodeType.VALUE) {
@@ -213,7 +213,7 @@ function getNodeWidth(canvas, node) {
 }
 
 function calculateDrawablePositions(
-    canvas, drawable, vscaler, parent_offset = 0) {
+  canvas, drawable, vscaler, parent_offset = 0) {
   let offset = 0;
   let scale = 1;
   let hasArrow = drawable.arrow;
@@ -225,11 +225,11 @@ function calculateDrawablePositions(
 
   drawable.children.forEach(child => {
     child.top =
-        child.depth * (canvas.fontsize * 3 * vscaler) + NODE_PADDING / 2;
+      child.depth * (canvas.fontsize * 3 * vscaler) + NODE_PADDING / 2;
     child.left = offset + parent_offset;
     child.width *= scale;
     const child_has_arrow =
-        calculateDrawablePositions(canvas, child, vscaler, child.left);
+      calculateDrawablePositions(canvas, child, vscaler, child.left);
     if (child_has_arrow) hasArrow = true;
     offset += child.width;
   });
@@ -279,8 +279,8 @@ function calculateAutoSubscript(drawables) {
 
 function assignSubscripts(drawable, keys, tally) {
   if (!drawable.is_leaf &&
-      (drawable.subscript == null || drawable.subscript == '') &&
-      keys.includes(drawable.label)) {
+    (drawable.subscript == null || drawable.subscript == '') &&
+    keys.includes(drawable.label)) {
     mapInc(tally, drawable.label);
     drawable.subscript = '' + tally.get(drawable.label);
   }
@@ -369,17 +369,17 @@ function makeArrowSetOn(root, drawable, fontsize) {
     x: getDrawableCenter(drawable),
     y: drawable.top + (fontsize * 1.2)
   };
-  const to = {x: getDrawableCenter(target), y: target.top + (fontsize * 1.2)};
+  const to = { x: getDrawableCenter(target), y: target.top + (fontsize * 1.2) };
 
   const bottom = 1.4 *
-      findMaxDepthBetween(
-                     root, Math.min(drawable.left, target.left),
-                     Math.max(drawable.left, target.left));
+    findMaxDepthBetween(
+      root, Math.min(drawable.left, target.left),
+      Math.max(drawable.left, target.left));
 
   const ends_to = drawable.arrow.ends.to;
   const ends_from = drawable.arrow.ends.from;
 
   arrowSet.add(
-      new Arrow(from.x, from.y, to.x, to.y, bottom, ends_to, ends_from));
+    new Arrow(from.x, from.y, to.x, to.y, bottom, ends_to, ends_from));
   return arrowSet;
 }

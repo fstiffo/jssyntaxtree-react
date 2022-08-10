@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
 const Canvas = ({ draw, height, width }) => {
-    const canvas = React.useRef();
+    const canvas = useRef();
 
-    React.useEffect(() => {
+    useEffect(() => {
         const context = canvas.current.getContext("2d");
         draw(context);
     });
