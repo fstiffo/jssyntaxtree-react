@@ -21,11 +21,11 @@ export default class Tree {
 
   resizeCanvas(w, h) {
     this.canvas.resize(w, h);
-    this.canvas.translate(0, canvas.fontsize / 2);
+    this.canvas.translate(0, this.canvas.fontsize / 2);
   }
 
-  draw(canvas, syntax_tree) {
-    this.setCanvas(canvas);
+  draw(_canvas, syntax_tree) {
+    this.setCanvas(_canvas);
     if (this.canvas == null) throw 'Canvas must be set first.';
 
     const drawables = drawableFromNode(this.canvas, syntax_tree);

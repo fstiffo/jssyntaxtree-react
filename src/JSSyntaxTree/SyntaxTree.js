@@ -88,9 +88,10 @@ function SyntaxTree(props) {
                 ctx.arc(95, 50, 40, 0, 2 * Math.PI);
                 ctx.closePath();
                 ctx.stroke();
-                treedraw(canvas);
+                console.log(canvas.current);
+                treedraw(canvas.current);
             }} height={100} width={100} />
-            <span>{parseerror} </span>
+            <span>{parseerror}</span>
         </div>
     );
 }
