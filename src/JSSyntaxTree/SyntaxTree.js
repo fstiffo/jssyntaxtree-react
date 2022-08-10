@@ -15,7 +15,7 @@ function SyntaxTree(props) {
     const [nodecolor, setNodecolor] = useState(props.nodecolor);
     const [autosub, setAutosub] = useState(props.autosub);
     const [bottom, setBottom] = useState(props.bottom);
-    const [parseerror, setParseerror] = useState("");
+    const [parseerror, setParseerror] = useState(0);
 
 
     const ref = useRef();
@@ -54,7 +54,7 @@ function SyntaxTree(props) {
             const tree = new Tree();
             tree.draw(canvas, syntax_tree);
         } catch (err) {
-            setParseerror(err)
+            setParseerror(""+err)
         }
     };
 
@@ -81,7 +81,7 @@ function SyntaxTree(props) {
     };
 
     return (
-        <>
+        <div className="syntax-tree">
             <Canvas draw={canvas => {
                 const ctx = canvas.current.getContext("2d");
                 ctx.beginPath();
@@ -90,7 +90,8 @@ function SyntaxTree(props) {
                 ctx.stroke();
                 treedraw(canvas);
             }} height={100} width={100} />
-        </>
+            <span>{parseerror}</span>
+        </div>
     );
 }
 
