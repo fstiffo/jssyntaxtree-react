@@ -8,7 +8,7 @@ const Canvas = ({ draw, height, width }) => {
         const context = canvas.current.getContext("2d");
         console.log("Canvas draw");
         draw(canvas);
-    });
+    }, []);
 
     return <canvas ref={canvas} height={height} width={width} />;
 };

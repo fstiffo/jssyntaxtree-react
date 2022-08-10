@@ -81,9 +81,16 @@ function SyntaxTree(props) {
     };
 
     return (
-        <div className="SyntaxTree">
-            <Canvas draw={treedraw} height={100} width={100} />
-        </div>
+        <>
+            <Canvas draw={canvas => {
+                const ctx = canvas.current.getContext("2d");
+                ctx.beginPath();
+                ctx.arc(95, 50, 40, 0, 2 * Math.PI);
+                ctx.closePath();
+                ctx.stroke();
+                treedraw(canvas);
+            }} height={100} width={100} />
+        </>
     );
 }
 
