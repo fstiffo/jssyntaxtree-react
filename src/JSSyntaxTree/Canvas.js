@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 
 const Canvas = ({ draw, height, width }) => {
@@ -6,6 +6,7 @@ const Canvas = ({ draw, height, width }) => {
 
     useEffect(() => {
         const context = canvas.current.getContext("2d");
+        console.log("Canvas draw");
         draw(canvas);
     });
 

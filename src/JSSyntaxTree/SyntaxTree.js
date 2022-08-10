@@ -20,6 +20,7 @@ function SyntaxTree(props) {
 
     const ref = useRef();
 
+    /*
     const [tree, setTree] = useState(null)
     useEffect(() => {
         const tree = new Tree();
@@ -27,7 +28,7 @@ function SyntaxTree(props) {
         console.log("Tree setup");
         // do something here with the canvas
     }, [tree])
-
+*/
     /*
         useEffect(() => {
             try {
@@ -42,14 +43,15 @@ function SyntaxTree(props) {
             }
         });
     */
-    const draw = (canvas) => {
-        return null;
+    const treedraw = (canvas) => {
+        //return null;
         try {
             console.log(`Phrase: ${phrase}`);
             const tokens = Tokenizer.tokenize(phrase);
             validateTokens(tokens);
 
             const syntax_tree = Parser.parse(tokens);
+            const tree = new Tree();
             tree.draw(canvas, syntax_tree);
         } catch (err) {
             setParseerror(err)
@@ -80,8 +82,7 @@ function SyntaxTree(props) {
 
     return (
         <div className="SyntaxTree">
-            <Canvas draw={draw} height={height} width={width} />
-            <span id="parse-error">{parseerror}</span>
+            <Canvas draw={treedraw} height={100} width={100} />
         </div>
     );
 }
