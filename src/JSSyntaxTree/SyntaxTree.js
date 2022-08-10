@@ -54,7 +54,7 @@ function SyntaxTree(props) {
             const tree = new Tree();
             tree.draw(canvas, syntax_tree);
         } catch (err) {
-            setParseerror(""+err)
+            setParseerror("" + err)
         }
     };
 
@@ -90,7 +90,7 @@ function SyntaxTree(props) {
                 ctx.stroke();
                 treedraw(canvas);
             }} height={100} width={100} />
-            <span>{parseerror}</span>
+            <span>{parseerror} </span>
         </div>
     );
 }
