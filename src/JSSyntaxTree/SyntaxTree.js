@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Canvas from './Canvas';
 
 import Tree from "./tree.js";
 
@@ -19,31 +20,40 @@ function SyntaxTree(props) {
 
     const ref = useRef();
 
-    const [canvas, setCanvas] = useState(null);
-    const [tree, setTree] = useState(tree)
+    const [tree, setTree] = useState(null)
     useEffect(() => {
-        const canvas = ref.current;
-        setCanvas(canvas);
         const tree = new Tree();
-        tree.setCanvas(canvas);
         setTree(tree);
-        console.log("Canvas and tree setup");
+        console.log("Tree setup");
         // do something here with the canvas
-    }, [canvas])
+    }, [tree])
 
-
-    useEffect(() => {
+    /*
+        useEffect(() => {
+            try {
+                console.log(`Phrase: ${phrase}`);
+                const tokens = Tokenizer.tokenize(phrase);
+                validateTokens(tokens);
+    
+                const syntax_tree = Parser.parse(tokens);
+                tree.draw(syntax_tree);
+            } catch (err) {
+                setParseerror(err)
+            }
+        });
+    */
+    const draw = (canvas) => {
         try {
             console.log(`Phrase: ${phrase}`);
             const tokens = Tokenizer.tokenize(phrase);
             validateTokens(tokens);
 
             const syntax_tree = Parser.parse(tokens);
-            tree.draw(syntax_tree);
+            tree.draw(canvas, syntax_tree);
         } catch (err) {
             setParseerror(err)
         }
-    });
+    };
 
     const validateTokens = (tokens) => {
         if (tokens.length < 3) throw "Phrase too short";
@@ -69,7 +79,7 @@ function SyntaxTree(props) {
 
     return (
         <div className="SyntaxTree">
-            <canvas ref={ref} />
+            <Canvas draw={draw} height={height} width={width} />
             <span id="parse-error">{parseerror}</span>
         </div>
     );

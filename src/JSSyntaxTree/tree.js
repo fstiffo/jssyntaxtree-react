@@ -24,7 +24,8 @@ export default class Tree {
     this.canvas.translate(0, canvas.fontsize / 2);
   }
 
-  draw(syntax_tree) {
+  draw(canvas, syntax_tree) {
+    this.setCanvas(canvas);
     if (this.canvas == null) throw 'Canvas must be set first.';
 
     const drawables = drawableFromNode(this.canvas, syntax_tree);
