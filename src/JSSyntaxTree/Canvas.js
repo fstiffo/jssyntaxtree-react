@@ -1,26 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
-function Canvas() {
-    const [font, setFont] = useState('sans-serif');
-    const [fontsize, setFontsize] = useState(16);
+const Canvas = ({ draw, height, width }) => {
+    const canvas = React.useRef();
 
+    React.useEffect(() => {
+        const context = canvas.current.getContext("2d");
+        draw(context);
+    });
 
-    const ref = useRef();
+    return <canvas ref={canvas} height={height} width={width} />;
+};
 
-
-    const [canvas, setCanvas] = useState(null);
-    const [context, setContext] = useState(null);
-    useEffect(() => {
-        setCanvas(ref.current);
-        setContext(canvas.getoContext('2d'));
-
-        // do something here with the canvas
-    }, [canvas])
-
-    return (
-        <canvas ref={ref} className="SyntaxTree" />
-    );
-}
-
+Canvas.propTypes = {
+    draw: PropTypes.func.isRequired,
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired
+};
 
 export default Canvas;

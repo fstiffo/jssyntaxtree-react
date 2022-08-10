@@ -76,7 +76,7 @@ function SyntaxTree(props) {
 }
 
 SyntaxTree.defaultProps = {
-    phrase: "[S [NP jsSyntaxTree][VP [V creates] NP nice syntax trees ->#1]]]",
+    phrase: "[S [NP jsSyntaxTree][VP [V creates] NP nice syntax trees ->#1]]",
     font: "sans-serif",
     fontsize: 16,
     triangles: true,
