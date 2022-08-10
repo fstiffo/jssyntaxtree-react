@@ -43,6 +43,7 @@ function SyntaxTree(props) {
         });
     */
     const draw = (canvas) => {
+        return null;
         try {
             console.log(`Phrase: ${phrase}`);
             const tokens = Tokenizer.tokenize(phrase);
