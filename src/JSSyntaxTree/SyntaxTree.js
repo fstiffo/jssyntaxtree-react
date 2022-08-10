@@ -7,7 +7,7 @@ import * as Tokenizer from "./tokenizer.js";
 
 
 function SyntaxTree(props) {
-    const [phrase, setPhrase] = useState({ ...props.phrase });
+    const [phrase, setPhrase] = useState(props.phrase);
     const [font, setFont] = useState(props.font);
     const [fontsize, setFontsize] = useState(props.fontsize);
     const [triangles, setTriangles] = useState(props.triangles);
