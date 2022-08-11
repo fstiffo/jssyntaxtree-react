@@ -15,7 +15,7 @@ function SyntaxTree(props) {
     const [nodecolor, setNodecolor] = useState(props.nodecolor);
     const [autosub, setAutosub] = useState(props.autosub);
     const [bottom, setBottom] = useState(props.bottom);
-    const [parseerror, setParseerror] = useState(0);
+    const [parseerror, setParseerror] = useState("");
 
 
     const ref = useRef();
